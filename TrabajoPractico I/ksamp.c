@@ -71,9 +71,51 @@
 	 }
 
 
+void print_time (long time){
+	const long minute = 60;
+	const long hour = minute * 60;
+	const long day = hour * 24;
 
+	printf("%ldD:%ld:%02ld:%02ld\n",time / day, (time % day) / hour,
+					(time % hour) / minute,time % minute);
 
+}
 
+void uptimeInfo(){
+	FILE *fp;
+double uptime;
+fp = fopen("/proc/uptime","r");
+fscanf(fp,"%lf\n",&uptime);
+//printf("%lf\n",uptime);
+print_time(uptime);
+
+fclose (fp);
+
+return;
+}
+void archivosSoportados(){
+			FILE *archivo;
+		 	char caracter;
+		 	int lin=0;
+
+		 	archivo = fopen("/proc/filesystems","r");
+
+		 	if (archivo == NULL){
+
+		 		printf("\nError de apertura del archivo. \n\n");
+		         }else{
+
+		 	    while (feof(archivo) == 0)
+		 	    {
+		 		caracter = fgetc(archivo);
+		 		if(caracter=='\n'){ lin++;}
+		 	//	printf("%c",caracter);
+		 	    }
+		         }
+		 	printf("El numero de archivos soportados: %u\n",lin);
+		         fclose(archivo);
+		 	return ;
+}
 int main(int argc, char **argv){
 	char tipocpu[30];
 	char modelocpu[50];
@@ -82,7 +124,7 @@ int main(int argc, char **argv){
 	printf("%s%s", tipocpu, modelocpu);
 	 kernelInfo();
 
-	//printf("%s",kernel);
+	uptimeInfo();
+	archivosSoportados();
 	return 0;
 }
-
