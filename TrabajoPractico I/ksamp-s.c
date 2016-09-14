@@ -93,60 +93,56 @@ void print_time (long time){
 					(time % hour) / minute,time % minute);
 
 }
-
 void tiemposCpu(){
-	FILE *archivo;
-	archivo = fopen("/proc/stat","r");
+ 	FILE *archivo;
+ 	//char caracter[100];
+ 	//double userTime;
+ 	//char *p=NULL;
+ 	archivo = fopen("/proc/stat","r");
 
-	float usuario, sistema, desuso;
+ 	float usuario, sistema, desuso;
 
-	if (archivo == NULL){
+ 	if (archivo == NULL){
 
-		printf("\nError de apertura del archivo. \n\n");
-	}
+ 		printf("\nError de apertura del archivo. \n\n");
+ 	}
 
-	else{
-
-		fscanf(archivo,"cpu %f %*f %f %f", &usuario, &sistema, &desuso);
-		printf("usuario: ");
-		print_time((long)usuario);
-		printf("sistema: ");
-		print_time((long)sistema);
-		printf("desuso: ");
-		print_time((long)desuso);
+ 	else{
 
 
+ 		printf("\nEl contenido del archivo es:\n");
 
-			}
 
-	fclose(archivo);
-	return;
+ 		fscanf(archivo,"cpu %f %*f %f %f", &usuario, &sistema, &desuso);
+ 		printf("usuario: ");
+ 		print_time((long)usuario);
+ 		printf("sistema: ");
+ 		print_time((long)sistema);
+ 		printf("desuso: ");
+ 		print_time((long)desuso);
 
-}
 
-void uptimeInfo(){
-	FILE *fp;
-	double uptime;
-	fp = fopen("/proc/uptime","r");
-	fscanf(fp,"%lf\n",&uptime);
-	print_time(uptime);
 
-	fclose (fp);
+ 			}
 
-	return;
-}
+ 	fclose(archivo);
+ 	return;
+
+ }
 
 int main(int argc, char **argv){
 	char cambio[30];
 	char procesos[30];
 	char hinicio[30];
+	tiemposCpu();
 	cambioContexto(cambio);
 	printf("Numero de cambios de contexto: %s",cambio);
+	horaInicio(hinicio);
 	numeroProcesos(procesos);
 	printf("Numero de procesos: %s",procesos);
-	uptimeInfo();
-	tiemposCpu();
-	horaInicio(hinicio);
+
+
+
 
 
 }
