@@ -99,6 +99,7 @@ int main(int argc, char **argv)
 	return 0;
 }
 
+
 void infoDefault()
 {	
 	//MODIFICAR FUNCIONES PARA QUE NO LLEVEN PARAMETROS CHAR[]
@@ -133,7 +134,7 @@ void nombreMaquina()
  	return;
 }
 
-void fechaHoraActual()   //NO IMPRIME FECHA Y HORA - VER!!
+void fechaHoraActual()  
 {
 	FILE *archivo;
  	archivo = fopen("/proc/driver/rtc","r");
@@ -266,6 +267,7 @@ void uptimeInfo()
 	fp = fopen("/proc/uptime","r");
 
 	fscanf(fp,"%lf\n",&uptime);
+	printf("Hora de inicio: ");
 	print_time(uptime);
 
 	fclose (fp);
