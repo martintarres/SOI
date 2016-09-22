@@ -130,6 +130,8 @@ void nombreMaquina()
 
  	fscanf(archivo, "%[^\n]s", nombre);
  	printf("Nombre de la maquina: %s\n",nombre);
+
+ 	fclose(archivo);
  	
  	return;
 }
@@ -176,76 +178,74 @@ void fechaHoraActual()
 	printf("Fecha: %s\n",fecha);
 	printf("Hora: %s\n", hora);
 
+
 	return;
 }
 
-void cpuInfo(char* tipocpu,char* modelocpu){
-		FILE *archivo;
-		char caracter[100];
-		archivo = fopen("/proc/cpuinfo","r");
-		char *p=NULL;
-		char *g=NULL;
+void cpuInfo(char* tipocpu,char* modelocpu)
+{
+	FILE *archivo;
+	char caracter[100];
+	archivo = fopen("/proc/cpuinfo","r");
+	char *p=NULL;
+	char *g=NULL;
 
 
-		if (archivo == NULL){
+	if (archivo == NULL)
+	{
+		printf("\nError de apertura del archivo. \n\n");
+    }
+	else
+	{
 
-			printf("\nError de apertura del archivo. \n\n");
-	        }else{
+	    printf("\nEl contenido del archivo es:\n");
 
-
-		    printf("\nEl contenido del archivo es:\n");
-
-		    while (feof(archivo) == 0)
-		    {
-			 fgets(caracter, 100, archivo);
+	    while (feof(archivo) == 0)
+	    {
+			fgets(caracter, 100, archivo);
 
 			p=strstr (caracter , "vendor_id");
 
-			if(p!=NULL)
-					break;
+			if(p!=NULL)	break;
 
-		    }
-		    strcpy(tipocpu,p);
-		    while (feof(archivo) == 0)
-		    		    {
-		    			 fgets(caracter, 100, archivo);
-
-		    			g=strstr (caracter , "model name");
-
-		    			if(g!=NULL)
-		    					break;
-
-	        }
-	        fclose(archivo);
-
-	       strcpy(modelocpu, g);
-	        strcpy(modelocpu,g);
-
-
-	        return;
+		}
+	    strcpy(tipocpu,p);
+	    while (feof(archivo) == 0)
+	    {
+			fgets(caracter, 100, archivo);
+			g=strstr (caracter , "model name");
+			if(g!=NULL) break;
+	    }
+	    fclose(archivo);
+	    strcpy(modelocpu, g);
+	    strcpy(modelocpu,g);
 	}
+	return;
  }
 
- void kernelInfo(){
-	 	 FILE *archivo;
-	 	char caracter;
+ void kernelInfo()
+ {
+	FILE *archivo;
+	char caracter;
 
-	 	archivo = fopen("/proc/sys/kernel/osrelease","r");
+	archivo = fopen("/proc/sys/kernel/osrelease","r");
 
-	 	if (archivo == NULL){
-
-	 		printf("\nError de apertura del archivo. \n\n");
-	         }else{
-	        	 printf("Kernel: ");
-	 	    while (feof(archivo) == 0)
-	 	    {
+	if (archivo == NULL)
+	{
+ 		printf("\nError de apertura del archivo. \n\n");
+	}
+	else
+	{
+		printf("Kernel: ");
+	    while (feof(archivo) == 0)
+	    {
 	 		caracter = fgetc(archivo);
 	 		printf("%c",caracter);
-	 	    }
-	         }
-	         fclose(archivo);
-	 	return ;
-	 }
+ 	    }
+ 	}
+ 	fclose(archivo);
+	return ;
+}
 
 
 void print_time (long time){
@@ -274,116 +274,124 @@ void uptimeInfo()
 
 	return;
 }
-void archivosSoportados(){
-			FILE *archivo;
-		 	char caracter;
-		 	int lin=0;
-
-		 	archivo = fopen("/proc/filesystems","r");
-
-		 	if (archivo == NULL){
-
-		 		printf("\nError de apertura del archivo. \n\n");
-		         }else{
-
-		 	    while (feof(archivo) == 0)
-		 	    {
-		 		caracter = fgetc(archivo);
-		 		if(caracter=='\n'){ lin++;}
-		 	//	printf("%c",caracter);
-		 	    }
-		         }
-		 	printf("El numero de archivos soportados: %u\n",lin);
-		         fclose(archivo);
-		 	return ;
-}
-void numeroProcesos(char* procesos){
+void archivosSoportados()
+{
 	FILE *archivo;
-			char caracter[100];
-			archivo = fopen("/proc/stat","r");
-			char *p=NULL;
+ 	char caracter;
+ 	int lin=0;
 
-			if (archivo == NULL){
+	archivo = fopen("/proc/filesystems","r");
 
-					printf("\nError de apertura del archivo. \n\n");
-			        }else{
-
-
-				    while (feof(archivo) == 0)
-				    {
-					 fgets(caracter, 100, archivo);
-
-					p=strstr (caracter , "processes");
-
-					if(p!=NULL)
-							break;
-
-				    }
-				    strcpy(procesos,p);
-
+	if (archivo == NULL)
+	{
+		printf("\nError de apertura del archivo. \n\n");
 	}
-return;
+	else
+	{
+ 	    while (feof(archivo) == 0)
+ 	    {
+	 		caracter = fgetc(archivo);
+	 		if(caracter=='\n')
+	 		{
+	 			lin++;
+	 		}
+ 	//	printf("%c",caracter);
+    	}
+   	}
+   	printf("El numero de archivos soportados: %u\n",lin);
+	fclose(archivo);
+	return ;
 }
-void cambioContexto(char* cambio){
+void numeroProcesos(char* procesos)
+{
 	FILE *archivo;
-		char caracter[100];
-		archivo = fopen("/proc/stat","r");
-		char *p=NULL;
+	char caracter[100];
+	archivo = fopen("/proc/stat","r");
+	char *p=NULL;
 
-		if (archivo == NULL){
+	if (archivo == NULL)
+	{
+		printf("\nError de apertura del archivo. \n\n");
+    }
+	else
+	{
+	    while (feof(archivo) == 0)
+	    {
+	     	fgets(caracter, 100, archivo);
+			p=strstr (caracter , "processes");
 
-				printf("\nError de apertura del archivo. \n\n");
-		        }else{
+			if(p!=NULL)	break;
 
+	    }
+	    strcpy(procesos,p);
+	}
 
-			    while (feof(archivo) == 0)
-			    {
-				 fgets(caracter, 100, archivo);
+ 	fclose(archivo);
 
+	return;
+}
+void cambioContexto(char* cambio)
+{
+	FILE *archivo;
+	char caracter[100];
+	archivo = fopen("/proc/stat","r");
+	char *p=NULL;
+
+	if (archivo == NULL)
+	{
+		printf("\nError de apertura del archivo. \n\n");
+	}
+	else
+	{
+
+	    while (feof(archivo) == 0)
+		    {
+				fgets(caracter, 100, archivo);
 				p=strstr (caracter , "ctxt");
 
-				if(p!=NULL)
-						break;
+				if(p!=NULL) break;
+			}
+	    strcpy(cambio,p);
+	}
 
-			    }
-			    strcpy(cambio,p);
+ 	fclose(archivo);
 
+	return;
 }
-return;
-}
 
-void horaInicio(char* hinicio){
+void horaInicio(char* hinicio)
+{
 	FILE *archivo;
-		char caracter[100];
-		archivo = fopen("/proc/stat","r");
-		char inicio[100];
-		time_t btime;
-		unsigned int aux;
+	char caracter[100];
+	archivo = fopen("/proc/stat","r");
+	char inicio[100];
+	time_t btime;
+	unsigned int aux;
 
-		if (archivo == NULL){
+	if (archivo == NULL)
+	{
 
-				printf("\nError de apertura del archivo. \n\n");
-		        }else{
+		printf("\nError de apertura del archivo. \n\n");
+	}
+	else
+	{
+		while (feof(archivo) == 0)
+		    {
+				fgets(caracter, 100, archivo);
+				sscanf(caracter, "btime %u", &aux);
+				btime=(time_t)aux;
+			}
+	    strftime(inicio,sizeof(inicio),"%c", localtime(&btime));
+	    printf("Horario Inicio: %s \n", inicio);
+	}
 
+	fclose(archivo);
 
-			    while (feof(archivo) == 0)
-			    {
-				 fgets(caracter, 100, archivo);
-
-
-				 sscanf(caracter, "btime %u", &aux);
-				 btime=(time_t)aux;
-
-
-			    }
-			    strftime(inicio,sizeof(inicio),"%c", localtime(&btime));
-			    printf("Horario Inicio: %s \n", inicio);
-
-
+	return;
 }
-return;
-}
-void tiemposCpu(){
+
+void tiemposCpu()
+{
  	FILE *archivo;
  	archivo = fopen("/proc/stat","r");
  	float usuario, sistema, desuso;
@@ -409,64 +417,67 @@ void tiemposCpu(){
 
  }
 
- void memoriaTotal(char* memTotal){
-				FILE *archivo;
-				char caracter[100];
-				archivo = fopen("/proc/meminfo","r");
-				char *p=NULL;
+void memoriaTotal(char* memTotal)
+{
+ 	FILE *archivo;
+	char caracter[100];
+	archivo = fopen("/proc/meminfo","r");
+	char *p=NULL;
 
-				if (archivo == NULL){
-
-						printf("\nError de apertura del archivo. \n\n");
-				        }else{
-
-
-					    while (feof(archivo) == 0)
-					    {
-						 fgets(caracter, 100, archivo);
-
-						p=strstr (caracter , "MemTotal:");
-
-						if(p!=NULL)
-								break;
-
-					    }
-					    strcpy(memTotal,p);
-
-		}
-		return;
+	if (archivo == NULL)
+	{
+		printf("\nError de apertura del archivo. \n\n");
 	}
+	else
+	{
+
+	    while (feof(archivo) == 0)
+		    {
+				fgets(caracter, 100, archivo);
+				p=strstr (caracter , "MemTotal:");
+
+				if(p!=NULL)	break;
+			}
+		strcpy(memTotal,p);
+
+	}
+
+	fclose(archivo);
+
+	return;
+}
 		
 
 
 void memoriaDisponible(char* memDispo){
-				FILE *archivo;
-				char caracter[100];
-				archivo = fopen("/proc/meminfo","r");
-				char *p=NULL;
+	FILE *archivo;
+	char caracter[100];
+	archivo = fopen("/proc/meminfo","r");
+	char *p=NULL;
 
-				if (archivo == NULL){
+	if (archivo == NULL)
+	{
+		printf("\nError de apertura del archivo. \n\n");
+	}
+	else
+	{
+	    while (feof(archivo) == 0)
+	    {
+			fgets(caracter, 100, archivo);
 
-						printf("\nError de apertura del archivo. \n\n");
-				        }else{
+			p=strstr (caracter , "MemAvailable:");
 
-
-					    while (feof(archivo) == 0)
-					    {
-						 fgets(caracter, 100, archivo);
-
-						p=strstr (caracter , "MemAvailable:");
-
-						if(p!=NULL)
-								break;
-
-					    }
-					    strcpy(memDispo,p);
+			if(p!=NULL) break;
 
 		}
-return;
+		strcpy(memDispo,p);
+
+	}
+	fclose(archivo);
+	return;
 }
-void peticionesDisco(){
+void peticionesDisco()
+{
 	FILE *archivo;
 				char caracter[100];
 				archivo = fopen("/proc/diskstats","r");
@@ -499,6 +510,8 @@ void peticionesDisco(){
 					   printf("Total de lecturas pedidas a disco :%u", total);
 					   printf("\n");
 		}
+
+		fclose(archivo);
 
 		return;
 
