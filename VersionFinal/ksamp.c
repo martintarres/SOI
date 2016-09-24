@@ -1,3 +1,9 @@
+/**
+*Ksamp.
+*Muestra de diversass formas algun subconjunto de la 
+*informacion disponible en /proc.
+*/
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -21,6 +27,14 @@ void infoDefault();
 void nombreMaquina();
 void fechaHoraActual();
 
+/**
+*main con parametros
+*@param arg un numero entero correspondiente a la cantidad de
+*		argumentos introducidos
+*@param argv array de puntero a carateres segun el cual
+*       se muestra distinta informacion. 
+*/
+
 int main(int argc, char **argv)
 {
 	
@@ -28,17 +42,11 @@ int main(int argc, char **argv)
     int lflag = 0;
     int a,b,c;
 
-    //cambiar las funciones para que no reciban parametros.
-
-
-
 	char cambio[30];
 	char procesos[30];
 	char hinicio[30];
 	char memTotal[50];
 	char memDispo[100];
-
-	//hasta aca no irian los char[]
 
 
 
@@ -78,8 +86,8 @@ int main(int argc, char **argv)
 
 		if(lflag==1)
 		{	
-			sscanf(argv[2],"%u",&a);
-			sscanf(argv[3],"%u",&b);
+			sscanf(argv[2],"%d",&a);
+			sscanf(argv[3],"%d",&b);
 			int contador=0;
 
 			while(contador<=b)
@@ -99,13 +107,18 @@ int main(int argc, char **argv)
 	return 0;
 }
 
-
+/**
+*Llama a los metodos correspondientes para imprimir el nombre de la maquina
+*fecha y hora actuales
+*tipo y modelo de CPU
+*version del kernel
+*cantidad de tiempo transcurrido desde que se inicio el sistema
+*cantidad de sistemas de arichivos soportados por el kernel.
+*/
 void infoDefault()
 {	
-	//MODIFICAR FUNCIONES PARA QUE NO LLEVEN PARAMETROS CHAR[]
 	char tipocpu[30];
 	char modelocpu[50];
-//	char kernel[30];
 
 	nombreMaquina();
 	fechaHoraActual();
@@ -116,7 +129,9 @@ void infoDefault()
 	archivosSoportados();
 	return;
 }
-
+/**
+*Imprime el nombre de la maquina segun lo tomado del archivo hostname
+*/
 void nombreMaquina()
 {	
 	FILE *archivo;
@@ -135,6 +150,9 @@ void nombreMaquina()
  	
  	return;
 }
+/**
+*Imprime la fecha y hora actual segun lo tomado del archivo rtc
+*/
 
 void fechaHoraActual()  
 {
@@ -182,6 +200,10 @@ void fechaHoraActual()
 	return;
 }
 
+/**
+*Imprime el tipo y modelo de cpu segun lo tomado del archivo cpuinfo
+*/
+
 void cpuInfo(char* tipocpu,char* modelocpu)
 {
 	FILE *archivo;
@@ -223,6 +245,10 @@ void cpuInfo(char* tipocpu,char* modelocpu)
 	return;
  }
 
+ /**
+ *Imprime la version del kernel segun lo tomado del archivo osrelease
+ */
+
  void kernelInfo()
  {
 	FILE *archivo;
@@ -248,6 +274,11 @@ void cpuInfo(char* tipocpu,char* modelocpu)
 }
 
 
+/**
+*Conversor de tiempo.
+*Imprime el tiempo que recive como dias, horas, minutos y segundos.
+*@param time un numero del tipo long que representa el tiempo a convertir
+*/
 void print_time (long time){
 
 	const long minute = 60;
@@ -260,6 +291,10 @@ void print_time (long time){
 	return;
 }
 
+/**
+*Imprime el tiempo transcurrido desde que se inicio el sistema
+*a partir de lo tomado del archivo uptime.
+*/
 void uptimeInfo()
 {
 	FILE *fp;
@@ -274,6 +309,11 @@ void uptimeInfo()
 
 	return;
 }
+
+/**
+*Imprime la cantidad de archivos soportados por el kernel 
+*a partir de lo tomado del archivo filesystems.
+*/
 void archivosSoportados()
 {
 	FILE *archivo;
@@ -302,6 +342,12 @@ void archivosSoportados()
 	fclose(archivo);
 	return ;
 }
+
+/**
+*Imprime la cantidad de procesos creados desde que se inicio el sistema
+*a partir de lo tomado del archivo stat.
+*@param procesos puntero del tipo char 
+*/
 void numeroProcesos(char* procesos)
 {
 	FILE *archivo;
@@ -330,6 +376,12 @@ void numeroProcesos(char* procesos)
 
 	return;
 }
+
+/**
+*Imprime la cantidad de cambios de contexto producidos a partir
+*de lo tomado del archivo stat.
+*@param cambio puntero del tipo char
+*/
 void cambioContexto(char* cambio)
 {
 	FILE *archivo;
@@ -359,6 +411,10 @@ void cambioContexto(char* cambio)
 	return;
 }
 
+/**
+*Imprime la hora en la que se inicio el sistema a partir de
+*lo tomado del archivo stat.
+*/
 void horaInicio(char* hinicio)
 {
 	FILE *archivo;
@@ -390,6 +446,10 @@ void horaInicio(char* hinicio)
 	return;
 }
 
+/**
+*Imprime la cantidad de tiempo de CPU utilizado para usuarios, sistema
+*y proceso idle a partir de lo tomado del archivo stat.
+*/
 void tiemposCpu()
 {
  	FILE *archivo;
@@ -416,7 +476,11 @@ void tiemposCpu()
  	return;
 
  }
-
+/**
+*Imprime la cantidad de memoria configurada en el hardware a partir
+*de lo tomado del archivo meminfo.
+*@param memTotal puntero a caracter
+*/
 void memoriaTotal(char* memTotal)
 {
  	FILE *archivo;
@@ -447,7 +511,10 @@ void memoriaTotal(char* memTotal)
 	return;
 }
 		
-
+/**
+*Imprime la cantidad de memoria disponible a partir de lo tomado del 
+*archivo meminfo.
+*/
 
 void memoriaDisponible(char* memDispo){
 	FILE *archivo;
@@ -476,6 +543,11 @@ void memoriaDisponible(char* memDispo){
 	fclose(archivo);
 	return;
 }
+
+/**
+*Imprime la cantidad de peticiones a disco realizadas a partir
+*de lo tomado del archivo disckstats.
+*/
 void peticionesDisco()
 {
 	FILE *archivo;
@@ -502,8 +574,8 @@ void peticionesDisco()
 								break;
 
 					    }
-					   sscanf(p,"sda %u", &lecturas);
-					   sscanf(p,"sda %*u %*u %*u %*u %u", &escrituras);
+					   sscanf(p,"sda %d", &lecturas);
+					   sscanf(p,"sda %*d %*d %*d %*d %d", &escrituras);
 					   total=lecturas + escrituras;
 					 //  printf("%u\n", lecturas);
 					 //  printf("%u\n", escrituras);
@@ -517,6 +589,10 @@ void peticionesDisco()
 
 	}
 
+/**
+*Imprime una lista de promedios de carga en un minuto a partir
+*de lo tomado del archivo loadvg.
+*/
 void promedioDeCarga()
 {
 	FILE *archivo;
