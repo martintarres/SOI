@@ -2,7 +2,7 @@
 
 
 ### Integrantes
-- Gatica, Carolina - 35.638.192
+- Gatica, Carolina - 35.530.890
 - Tarres, Martin   - 36.725.643
 
 ## Información importante
