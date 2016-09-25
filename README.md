@@ -2,7 +2,7 @@
 
 
 ### Integrantes
-- Gatica, Carolina - 35.530.890
+- Gatica, Carolina - 35.638.192
 - Tarres, Martin   - 36.725.643
 
 ## Información importante
@@ -34,14 +34,14 @@ Si ejecuta el programa de la forma `$./ksamp` el programa va a obtener informaci
 	-Cantidad de tiempo transcurrido desde que se inició el sistema operativo, con el formato ddD hh:mm:ss
  	-Cantidad de sistemas de archivo soportados por el kernel
 
-Si en terminal pone `$./ksamp-s` se obtiene la información agregando :
+Si en terminal pone `$./ksamp- s` se obtiene la información agregando :
 
 	-Cantidad de tiempo de CPU utilizado para usuarios, sistema y proceso idle.
 	-Cantidad de cambios de contexto.
 	-Fecha y hora cuando el sistema fue iniciado.
 	-Número de procesos creados desde el inicio del sistema.
 
-Si ejecuta el comando `$./ksamp-l N1 N2` siendo N1 el timepo de espera y N2 el tiempo total en que se repite la información lo de la versión `$./ksamp-s` agregando : 
+Si ejecuta el comando `$./ksamp -l N1 N2` siendo N1 el timepo de espera y N2 el tiempo total en que se repite la información lo de la versión `$./ksamp-s` agregando : 
 	
 	-Número de peticiones a disco realizadas.
 	-Cantidad de memoria configurada en el hardware.
