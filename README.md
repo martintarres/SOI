@@ -41,7 +41,7 @@ Si en terminal pone `$./ksamp-s` se obtiene la información agregando :
 	-Fecha y hora cuando el sistema fue iniciado.
 	-Número de procesos creados desde el inicio del sistema.
 
-Si ejecuta el comando `$./ksamp-l` lo de la versión `$./ksamp-s` agregando : 
+Si ejecuta el comando `$./ksamp-l N1 N2` siendo N1 el timepo de espera y N2 el tiempo total en que se repite la información lo de la versión `$./ksamp-s` agregando : 
 	
 	-Número de peticiones a disco realizadas.
 	-Cantidad de memoria configurada en el hardware.
